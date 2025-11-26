@@ -1,8 +1,11 @@
 import './scss/styles.scss';
-import {ProductList} from './components/base/Models/ProductList'
-import { apiProducts } from './utils/data'
-import {Cart} from './components/base/Models/Cart'
+import {ProductList} from './components/base/Models/ProductList';
+import { apiProducts } from './utils/data';
+import {Cart} from './components/base/Models/Cart';
 import { Buyer } from './components/base/Models/Buyer';
+import { ProductAPI } from './components/base/ProductAPI';
+import { API_URL } from './utils/constants';
+import { Api } from './components/base/Api';
 
 // тестирую ProductList
 const productsModel = new ProductList();
@@ -42,10 +45,58 @@ cartModel.clear(); //Очистила корзину
 console.log(cartModel.getItems()); //Должен вернуться пустой массив
 
 
-const buyer = new Buyer;
+const buyer = new Buyer();
+
+// Проверка начального состояния
+console.log('Начальное состояние:', buyer.getData());
+// Должно быть: { payment: '', email: '', phone: '', address: '' }
+
+//Заполнение данных
+buyer.setPayment('card');
+buyer.setEmail('test@mail.ru');
+buyer.setPhone('+79991234567');
+buyer.setAddress('Москва');
+
+console.log('После заполнения:', buyer.getData());
+
+//Валидация первого шага
+const step1Errors = buyer.validateStep1();
+console.log('Ошибки шага 1:', step1Errors);
+// Должно быть: {} (пустой объект, так как все заполнено)
+
+//Валидация второго шага  
+const step2Errors = buyer.validateStep2();
+console.log('Ошибки шага 2:', step2Errors);
+// Должно быть: {} (пустой объект)
+
+// Очистка
+buyer.clear();
+console.log('После очистки:', buyer.getData());
+// Должно быть снова пусто
 
 
 
+// Тест ошибок
+const buyer2 = new Buyer();
 
+// Не заполняем данные
+console.log('Ошибки шага 1 (пустые данные):', buyer2.validateStep1());
+// Должно быть: { payment: 'Не выбран способ оплаты', address: 'Введите адрес доставки' }
 
+// Заполняем только первый шаг
+buyer2.setPayment('cash');
+buyer2.setAddress('СПб');
+console.log('Ошибки шага 2 (email и phone пустые):', buyer2.validateStep2());
+// Должно быть: { email: 'Введите email', phone: 'Введите телефон' }
+
+const api = new Api (API_URL); 
+const productAPI = new ProductAPI(api);
+const productList = new ProductList();
+
+productAPI.getProductList()
+    .then(products => {
+        productList.setItems(products);
+        console.log('Товары загружены:', productList.getItems());
+    })
+    .catch(error => console.error('Ошибка:', error));
      
