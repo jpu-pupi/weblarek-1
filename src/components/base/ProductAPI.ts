@@ -1,9 +1,4 @@
-import { IApi, IProduct, IOrder, IOrderResult } from '../../types/index';
-
-interface IServerProductResponse {
-    total: number;
-    items: IProduct[];
-}
+import { IApi, IProduct, IOrder, IOrderResult, IServerProductResponse } from '../../types/index';
 
 export class ProductAPI {
     constructor(private api: IApi) {}

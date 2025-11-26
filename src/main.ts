@@ -1,8 +1,8 @@
 import './scss/styles.scss';
-import {ProductList} from './components/base/Models/ProductList';
+import {ProductList} from './components/Models/ProductList';
 import { apiProducts } from './utils/data';
-import {Cart} from './components/base/Models/Cart';
-import { Buyer } from './components/base/Models/Buyer';
+import {Cart} from './components/Models/Cart';
+import { Buyer } from './components/Models/Buyer';
 import { ProductAPI } from './components/base/ProductAPI';
 import { API_URL } from './utils/constants';
 import { Api } from './components/base/Api';
@@ -17,7 +17,7 @@ const element = productsModel.getItem(apiProducts.items[2].id)
 console.log('Найденный элемент: ', element);
 
 // Сохраняем товар
-productsModel.setPreviewItem(apiProducts.items[0].id);
+productsModel.setPreviewItem(apiProducts.items[0]);
 
 // Получаем сохраненный товар
 console.log('Получили сохраненный товар: ', productsModel.getPreviewItem());

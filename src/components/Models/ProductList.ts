@@ -1,4 +1,4 @@
-import {IProduct} from '../../../types/index'
+import {IProduct} from '../../types/index'
 
 export class ProductList {
     private items: IProduct[];
@@ -21,8 +21,8 @@ export class ProductList {
         return this.items.find(item => item.id === id);
     }
 
-    setPreviewItem(id: string): void {
-       this.previewItem = this.getItem(id) || null;
+    setPreviewItem(item: IProduct): void {
+       this.previewItem = item;
     }
 
     getPreviewItem(): IProduct | null {

@@ -32,3 +32,8 @@ export interface IOrderResult {
   id: string;
   total: number;
 }
+
+export interface IServerProductResponse {
+    total: number;
+    items: IProduct[];
+}
