@@ -6,6 +6,10 @@ import { Buyer } from './components/Models/Buyer';
 import { ProductAPI } from './components/base/ProductAPI';
 import { API_URL } from './utils/constants';
 import { Api } from './components/base/Api';
+import { EventEmitter } from './components/base/Events';
+import { Header } from './components/View/Header';
+import { Gallery } from './components/View/Gallery';
+import { Modal } from './components/View/modal';
 
 // тестирую ProductList
 const productsModel = new ProductList();
@@ -99,4 +103,40 @@ productAPI.getProductList()
         console.log('Товары загружены:', productList.getItems());
     })
     .catch(error => console.error('Ошибка:', error));
-     
+
+//Тестирую Header
+ const headerContainer = document.querySelector('.header') as HTMLElement;
+
+ const events = new EventEmitter();
+
+ const header = new Header (events, headerContainer);
+ console.log('Header создан:', header);
+ header.counter = 6;
+
+ console.log(header.render());
+
+ //Тестирую Gallery
+// Найти элемент с классом gallery
+const galleryElement = document.querySelector('main') as HTMLElement;
+
+// Найти шаблон
+const template = document.getElementById('card-catalog') as HTMLTemplateElement;
+
+// Клонировать содержимое шаблона
+const cardFragment = template.content.cloneNode(true) as DocumentFragment;
+const cardElement = cardFragment.firstElementChild as HTMLElement;
+
+// Создать экземпляр Gallery и передать карточку
+const gallery = new Gallery(galleryElement);
+gallery.catalog = [cardElement];
+
+console.log(gallery.render());
+
+//Тестирую Modal
+
+const events1 = new EventEmitter();
+const modalElement = document.getElementById('modal-container') as HTMLElement;
+const modal = new Modal(events1, modalElement);
+
+modal.content = cardElement;
+modal.open();
