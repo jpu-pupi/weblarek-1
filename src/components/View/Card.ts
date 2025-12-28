@@ -2,7 +2,6 @@ import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/Events";
 import { categoryMap } from "../../utils/constants";
-import { CDN_URL } from "../../utils/constants";
 
 
 interface ICard {
@@ -64,9 +63,8 @@ export class CardCatalog extends Card {
         }
     }
 
-    set image (title: string) {
-        this.itemImage.src = `${CDN_URL}/${title}`;
-        this.itemImage.alt = this.itemTitle.textContent || 'Изображение товара';
+    set image (value: string) {
+        this.setImage(this.itemImage, value, this.title);
     }
 }
 
@@ -128,9 +126,8 @@ export class CardPreview extends Card {
         }
     }
 
-    set image (title: string) {
-        this.itemImage.src = `${CDN_URL}/${title}`;
-        this.itemImage.alt = this.itemTitle.textContent || 'Изображение товара';
+    set image (value: string) {
+        this.setImage(this.itemImage, value, this.title);
     }
 
     set description (value: string) {
