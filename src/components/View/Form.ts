@@ -18,8 +18,8 @@ export interface IContactsForm extends IForm {
 }
 
 export abstract class Form<T extends IForm = IForm> extends Component<T> {
+    submitButton: HTMLButtonElement;
     protected errorSpan: HTMLElement;
-     submitButton: HTMLButtonElement;
     protected events: IEvents;
 
     constructor (events: IEvents, container: HTMLElement) {
@@ -28,11 +28,6 @@ export abstract class Form<T extends IForm = IForm> extends Component<T> {
 
         this.submitButton = ensureElement<HTMLButtonElement>('button[type="submit"]', this.container)
         this.errorSpan = ensureElement<HTMLElement>('.form__errors', this.container);
-
-        this.container.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.events.emit('form:checkout');
-        })
     }
 
     showError(message: string) {

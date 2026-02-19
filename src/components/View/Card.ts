@@ -132,7 +132,6 @@ export class CardPreview extends CardCatalog<ICardPreview> {
                 this.events.emit('card:add', { id: this.id });
             }
 
-            this.events.emit('modal:close')
         });
     }
 
@@ -151,7 +150,7 @@ export class CardPreview extends CardCatalog<ICardPreview> {
         this.changeButtonState();
     }
 
-    changeButtonState() {
+    changeButtonState(): void {
         if (this.priceValue === null) {
             this.itemButton.textContent = 'Недоступно';
             this.itemButton.disabled = true;
