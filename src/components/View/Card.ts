@@ -106,9 +106,10 @@ export class CardCatalog<T extends ICardCatalog = ICardCatalog> extends CardBase
     }
 
     set image(value: string) {
-    const fullUrl = `${CDN_URL}/${value}`;
+    const pngValue = value.replace(/\.svg$/, '.png');
+    const fullUrl = `${CDN_URL}/${pngValue}`;
     this.setImage(this.itemImage, fullUrl, this.title);
-}
+    }
 }
 
 export class CardPreview extends CardCatalog<ICardPreview> {
@@ -121,8 +122,11 @@ export class CardPreview extends CardCatalog<ICardPreview> {
 
         this.itemButton = ensureElement<HTMLButtonElement>('.card__button', this.container);
         this.itemDescription = ensureElement<HTMLElement>('.card__text', this.container);
+
         
-        this.itemButton.addEventListener('click', () => {
+        this.itemButton.addEventListener('click', (event) => {
+             event.stopPropagation();
+
             if (this.priceValue === null) return;
 
             if (this.inCart) {

@@ -1,4 +1,4 @@
-https://github.com/jpu-pupi/weblarek-1
+https://github.com/jpu-pupi/weblarek
 # Проектная работа "Веб-ларек"
 
 Стек: HTML, SCSS, TS, Vite

@@ -105,14 +105,19 @@ events.on<{ id: string }>('card:select', ({id}) =>{
     if (!product) return;
 
     cart.addItem(product);
+    modal.close();
+    
  });
+
 
  events.on<{ id: string}>('card:delete', ({id}) => {
     const product = productList.getItem(id);
     if (!product) return;
 
     cart.deleteItem(product);
+    modal.close();
  });
+
 
  events.on<IProduct[]>('cart:changed', (items) => {
     cartView.orderButtonDisabled = items.length === 0;
@@ -204,6 +209,7 @@ events.on<{ id: string }>('card:select', ({id}) =>{
         modal.content = successElement;
         modal.open();
         success.total = totalPrice;
+        
 
     } catch (err: any) {
         contactsForm.showError('Ошибка при оплате: ' + (err.message || 'неизвестная ошибка'));
