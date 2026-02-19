@@ -2,38 +2,39 @@ import { Component } from "../base/Component";
 import { ensureElement } from "../../utils/utils";
 import { IEvents } from "../base/Events";
 
-interface IBasket {
+interface ICartView {
     items: HTMLElement[];
     total: number;
 }
 
-export class Basket extends Component<IBasket> {
+export class CartView extends Component<ICartView> {
     private basketPrice: HTMLElement;
-    private buttonBasket: HTMLButtonElement;
+    private orderBasket: HTMLButtonElement;
     private basketList: HTMLElement;
 
     constructor (protected events: IEvents, container: HTMLElement) {
         super(container);
 
         this.basketList = ensureElement<HTMLElement>('.basket__list', this.container);
-        this.buttonBasket = ensureElement<HTMLButtonElement>('.basket__button', this.container);
+        this.orderBasket = ensureElement<HTMLButtonElement>('.basket__button', this.container);
         this.basketPrice = ensureElement<HTMLElement>('.basket__price', this.container);
 
-        this.buttonBasket.addEventListener('click', () => {
+        this.orderBasket.addEventListener('click', () => {
             this.events.emit('basket:checkout')
         })
     }
 
-     addItem(item: HTMLElement): void {
-        this.basketList.appendChild(item);
-    }
-
-    get itemsCount(): number {
-        return this.basketList.children.length;
+     set items(items: HTMLElement[]) {
+        this.basketList.innerHTML ='';
+        items.forEach(item => this.basketList.appendChild(item))
     }
 
     set total(value: number) {
         this.basketPrice.textContent = `${value} синапсов`;
+    }
+
+    set orderButtonDisabled (value: boolean) {
+        this.orderBasket.disabled = value;
     }
 }
 

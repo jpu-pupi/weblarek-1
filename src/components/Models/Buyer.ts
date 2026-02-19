@@ -1,4 +1,4 @@
-import { IBuyer, TPayment } from "../../types";
+import { IBuyer, IOrder, IProduct, TPayment } from "../../types";
 import { IEvents } from "../base/Events";
 
 export class Buyer {
@@ -38,11 +38,23 @@ export class Buyer {
         };
     }
 
+    getDataOrder (cartItems: IProduct[]): IOrder {
+        return {
+            payment: this.payment,
+            email: this.email,
+            phone: this.phone,
+            address: this.address,
+            items: cartItems.map(item => item.id),
+            total: cartItems.reduce((sum, item) => sum + (item.price || 0), 0),
+        };
+    }
+
     clear(): void {
         this.payment = ''
         this.email = ''
         this.phone = ''
         this.address = ''
+        
     }
 
     validateStep1(): { payment?: string; address?: string } {
